@@ -7,75 +7,75 @@ fi = (function() {
 
     each: function(collection, callback) {
       for (const i in collection){
-        callback(collection[i]);
+        callback(collection[i])
       }
-      return collection;
+      return collection
     },
 
     map: function(collection, callback) {
-      let array =[];
+      let array =[]
       for (const i in collection){
-        array.push(callback(collection[i]));
+        array.push(callback(collection[i]))
       }
-      return array;
+      return array
     },
 
     reduce: function(collection, callback, acc = 0) {
-      let b = acc;
+      let b = acc
       for (const i of collection){
-        b = callback(b, i, collection);
+        b = callback(b, i, collection)
       }
-      return b;
+      return b
     },
 
     find: function(collection, predicate){
       for (const i in collection) {
               if (predicate(collection[i]) === true) {
-                return collection[i];
+                return collection[i]
               }
             }
     },
 
     filter: function(collection, predicate) {
-          const newArr = [];
+          const newArr = []
           for (const i in collection) {
             if (predicate(collection[i]) === true) {
-              newArr.push(collection[i]);
+              newArr.push(collection[i])
             }
           }
-          return newArr;
+          return newArr
         },
 
         size: function(collection) {
-          return Object.keys(collection).length;
+          return Object.keys(collection).length
         },
 
         first: function(array, n) {
-          const newArr = [];
+          const newArr = []
           if (n === undefined) {
-            return array[0];
+            return array[0]
           } else {
-            return array.slice(0, n);
+            return array.slice(0, n)
           }
         },
 
         last: function(array, n) {
-          const newArr = [];
+          const newArr = []
           if (n === undefined) {
-            return array[array.length-1];
+            return array[array.length-1]
           } else {
-            return array.slice(array.length - n);
+            return array.slice(array.length - n)
           }
         },
 
         compact: function(array) {
-          const newArr = [];
+          const newArr = []
           for (const i in array){
             if (array[i]) {
-              newArr.push(array[i]);
+              newArr.push(array[i])
             }
           }
-          return newArr;
+          return newArr
         },
 
         sortBy: function(arr, iteratee){
@@ -83,16 +83,39 @@ fi = (function() {
         },
 
 
-        flatten: function(array) {
+        flatten: function flatten(array, shallow){
+     let newArr = []
+     for(var i in array){
+       if (shallow === true){
+         if(Array.isArray(array[i])) {
+             newArr = newArr.concat(array[i])
+         } else {
+             newArr.push(array[i])
+         }
+       }
+       else {
+         if(Array.isArray(array[i])) {
+             newArr = newArr.concat(flatten(array[i]))
+         } else {
+             newArr.push(array[i])
+         }
+       }
+     }
+     return newArr
+   },
 
-        },
 
-        uniq: function(array, isSorted, iteratee) {
+  uniq: function(list){
+     let newArr = []
+     for(var i in list){
+       if (newArr.includes(list[i]) === false){
+         newArr.push(list[i])
+       }
+     }
+     return newArr
+   },
 
-        },
-
-
-        keys: function(obj) {
+   keys: function(obj) {
      return Object.keys(obj)
    },
 
@@ -101,10 +124,18 @@ fi = (function() {
    },
 
 
-    functions: function() {
+    functions: function(fi) {
+      let newArr = []
+     for(var i in fi){
+       if(typeof fi[i] == "function" ){
+       newArr.push(fi[i])
+       }
+     }
+     newArr.sort()
+     return newArr
+   },
 
-    },
-
+  
 
   }
 })()
